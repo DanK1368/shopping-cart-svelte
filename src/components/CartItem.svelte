@@ -4,13 +4,26 @@
 	import FaAngleDown from 'svelte-icons/fa/FaAngleDown.svelte';
 
 	export let product;
-	console.log($cartItems);
 
 	const handleDeleteItem = (selectedItemId) => {
-		console.log(selectedItemId);
-
 		cartItems.update((currentItems) => {
 			return (currentItems = currentItems.filter((item) => item.id !== selectedItemId));
+		});
+	};
+
+	const handleIncreaseAmount = (selectedItemId) => {
+		cartItems.update((currentItems) => {
+			const cartItem = currentItems.find((item) => item.id === selectedItemId);
+			cartItem.amount++;
+			return currentItems;
+		});
+	};
+
+	const handleDecreaseAmount = (selectedItemId) => {
+		cartItems.update((currentItems) => {
+			const cartItem = currentItems.find((item) => item.id === selectedItemId);
+			cartItem.amount--;
+			return currentItems;
 		});
 	};
 </script>
@@ -19,7 +32,7 @@
 	<div class="cart__item__details-container">
 		<img class="cart__item__img" src={product.img} alt={product.model} />
 		<div class="cart__item__details">
-			<h3>Model</h3>
+			<h3>{product.model}</h3>
 			<p>CHF {product.price.toFixed(2)}</p>
 			<button class="cart__item__btn" on:click={() => handleDeleteItem(product.id)}>
 				Remove
@@ -27,11 +40,14 @@
 		</div>
 	</div>
 	<div class="cart__item__amount">
-		<button>
+		<button on:click={() => handleIncreaseAmount(product.id)}>
 			<FaAngleUp />
 		</button>
 		<p>{product.amount}</p>
-		<button>
+		<button
+			on:click={() =>
+				product.amount > 1 ? handleDecreaseAmount(product.id) : handleDeleteItem(product.id)}
+		>
 			<FaAngleDown />
 		</button>
 	</div>
@@ -54,6 +70,7 @@
 			flex-direction: column;
 			justify-content: space-around;
 			align-items: flex-start;
+			gap: 0.5rem;
 			height: 100%;
 			flex: 1;
 

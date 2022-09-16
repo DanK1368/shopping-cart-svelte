@@ -2,6 +2,7 @@
 	import '../styles/global.css';
 	import IoMdCart from 'svelte-icons/io/IoMdCart.svelte';
 	import { cartItems } from '../stores/cart';
+	console.log($cartItems);
 
 	$: totalItemsInCart = $cartItems.reduce((total, curr) => {
 		total += curr.amount;
@@ -89,6 +90,7 @@
 
 	.container {
 		min-height: 85vh;
+		width: 100%;
 		overflow-y: scroll;
 		display: grid;
 		place-content: center;

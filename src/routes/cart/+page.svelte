@@ -5,6 +5,12 @@
 	const handleClearCart = () => {
 		cartItems.update((currentItem) => (currentItem = []));
 	};
+
+	$: calculateTotalPrice = $cartItems.reduce((total, currentItem) => {
+		const totalPriceOfSingleItems = currentItem.price * currentItem.amount;
+		total += totalPriceOfSingleItems;
+		return total;
+	}, 0);
 </script>
 
 <svelte:head>
@@ -29,7 +35,7 @@
 	<div class="cart__footer">
 		<div class="cart__total">
 			<p>Total</p>
-			<p>CHF 255</p>
+			<p>CHF {calculateTotalPrice.toFixed(2)}</p>
 		</div>
 		<button class="cart__btn" on:click={handleClearCart}> Clear Cart </button>
 	</div>
@@ -37,7 +43,9 @@
 
 <style lang="scss">
 	.cart {
-		width: 600px;
+		width: clamp(300px, 100%, 600px);
+		padding-inline: 3rem;
+		margin: 0 auto;
 		height: 500px;
 
 		&__heading {

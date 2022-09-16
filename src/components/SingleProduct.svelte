@@ -21,7 +21,7 @@
 		<button class="singleProduct__btn" on:click={() => addProductToCart(product)}>
 			<MdShoppingCart />
 		</button>
-		CHF 9.99
+		CHF {product.price.toFixed(2)}
 	</div>
 </article>
 
