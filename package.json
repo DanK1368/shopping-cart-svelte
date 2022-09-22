@@ -23,6 +23,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@auth0/auth0-spa-js": "^1.22.4",
 		"svelte-icons": "^2.1.0",
 		"svelte-preprocess": "^4.10.7"
 	}

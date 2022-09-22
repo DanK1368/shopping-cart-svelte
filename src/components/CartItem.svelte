@@ -4,11 +4,10 @@
 	import FaAngleDown from 'svelte-icons/fa/FaAngleDown.svelte';
 
 	export let product;
+	let imgUrl = product.attributes.image.data.attributes.formats.thumbnail.url
 
 	const handleDeleteItem = (selectedItemId) => {
-		cartItems.update((currentItems) => {
-			return (currentItems = currentItems.filter((item) => item.id !== selectedItemId));
-		});
+		$cartItems = $cartItems.filter((item) => item.id !== selectedItemId);
 	};
 
 	const handleIncreaseAmount = (selectedItemId) => {
@@ -30,10 +29,10 @@
 
 <div class="cart__item">
 	<div class="cart__item__details-container">
-		<img class="cart__item__img" src={product.img} alt={product.model} />
+		<img class="cart__item__img" src={imgUrl} alt={product.attributes.name} />
 		<div class="cart__item__details">
-			<h3>{product.model}</h3>
-			<p>CHF {product.price.toFixed(2)}</p>
+			<h3>{product.attributes.name}</h3>
+			<p>CHF {product.attributes.price.toFixed(2)}</p>
 			<button class="cart__item__btn" on:click={() => handleDeleteItem(product.id)}>
 				Remove
 			</button>
@@ -43,10 +42,10 @@
 		<button on:click={() => handleIncreaseAmount(product.id)}>
 			<FaAngleUp />
 		</button>
-		<p>{product.amount}</p>
+		<p>{product.attributes.amount}</p>
 		<button
 			on:click={() =>
-				product.amount > 1 ? handleDecreaseAmount(product.id) : handleDeleteItem(product.id)}
+				product.attributes.amount > 1 ? handleDecreaseAmount(product.id) : handleDeleteItem(product.id)}
 		>
 			<FaAngleDown />
 		</button>

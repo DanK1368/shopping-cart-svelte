@@ -1,6 +1,6 @@
 <script>
 	import MdShoppingCart from 'svelte-icons/md/MdShoppingCart.svelte';
-	import { cartItems, productList } from '../stores/cart';
+	import { cartItems } from '../stores/cart';
 
 	const addProductToCart = (selectedItem) => {
 		const itemIndex = $cartItems.findIndex((item) => item.id === selectedItem.id);
@@ -12,16 +12,21 @@
 	};
 
 	export let product;
+
+	let imgUrl = product.attributes.image.data.attributes.formats.small.url
+	
 </script>
 
 <article class="singleProduct">
-	<h3 class="singleProduct__model">{product.model}</h3>
-	<img src={product.img} alt="" />
+	<h3 class="singleProduct__model">{product.attributes.name}</h3>
+	<a href={`/products/${product.id}`}>
+		<img src={imgUrl} alt={product.attributes.name} />
+	</a>
 	<div class="singleProduct__container">
 		<button class="singleProduct__btn" on:click={() => addProductToCart(product)}>
 			<MdShoppingCart />
 		</button>
-		CHF {product.price.toFixed(2)}
+		CHF {product.attributes.price.toFixed(2)}
 	</div>
 </article>
 

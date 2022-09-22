@@ -66,6 +66,8 @@ export const productList = writable([
 	}
 ]);
 
+export const productItems = writable([]);
+
 export const cartItems = writable([]);
 
 export const totalCartItems = writable(0);

@@ -1,16 +1,17 @@
 <script>
 	import CartItem from '../../components/CartItem.svelte';
-	import { cartItems } from '../../stores/cart';
+	import { cartItems} from '../../stores/cart';
 
 	const handleClearCart = () => {
-		cartItems.update((currentItem) => (currentItem = []));
+		$cartItems = [];
 	};
 
 	$: calculateTotalPrice = $cartItems.reduce((total, currentItem) => {
-		const totalPriceOfSingleItems = currentItem.price * currentItem.amount;
+		const totalPriceOfSingleItems = currentItem.attributes.price * currentItem.attributes.amount;
 		total += totalPriceOfSingleItems;
 		return total;
 	}, 0);
+
 </script>
 
 <svelte:head>
@@ -47,6 +48,7 @@
 		padding-inline: 3rem;
 		margin: 0 auto;
 		height: 500px;
+		padding-top: 2rem;
 
 		&__heading {
 			display: flex;
@@ -61,6 +63,8 @@
 			flex-direction: column;
 			height: 70%;
 			overflow: scroll;
+
+			scrollbar-width: none;
 
 			h3 {
 				color: rgb(255, 30, 79);
